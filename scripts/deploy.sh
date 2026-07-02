@@ -21,6 +21,13 @@ cd $ROOT_DIR/frontend
 npm install
 npm run build
 
+echo "1.5 Backing up current deployment..."
+rm -rf /tmp/astronova_backup
+mkdir -p /tmp/astronova_backup
+cp -r $APP_DIR/frontend/dist /tmp/astronova_backup/frontend_dist 2>/dev/null || true
+cp -r $APP_DIR/backend/app /tmp/astronova_backup/backend_app 2>/dev/null || true
+cp $APP_DIR/backend/requirements.txt /tmp/astronova_backup/requirements.txt 2>/dev/null || true
+
 echo "2. Copying Frontend Files to Server Directory..."
 rm -rf $APP_DIR/frontend/dist
 cp -r dist $APP_DIR/frontend/
@@ -51,10 +58,28 @@ HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/health)
 
 if [ "$HEALTH_STATUS" -eq 200 ]; then
     echo "Application health check passed (HTTP 200)!"
+    rm -rf /tmp/astronova_backup # Cleanup backup
 else
     echo "Warning: Application health check returned HTTP $HEALTH_STATUS."
     echo "Fetching logs for debugging:"
     journalctl -u books-app.service -n 20 --no-pager
+    
+    echo "=========================================="
+    echo " INITIATING AUTOMATIC ROLLBACK... "
+    echo "=========================================="
+    rm -rf $APP_DIR/frontend/dist $APP_DIR/backend/app
+    cp -r /tmp/astronova_backup/frontend_dist $APP_DIR/frontend/dist 2>/dev/null || true
+    cp -r /tmp/astronova_backup/backend_app $APP_DIR/backend/app 2>/dev/null || true
+    cp /tmp/astronova_backup/requirements.txt $APP_DIR/backend/requirements.txt 2>/dev/null || true
+    chown -R booksapp:booksapp $APP_DIR
+    
+    sudo -u booksapp bash << 'EOF'
+cd /opt/books-app/backend
+source venv/bin/activate
+pip install -r requirements.txt
+EOF
+    systemctl restart books-app.service
+    echo "Rollback completed successfully. Previous version restored."
     exit 1
 fi
 
