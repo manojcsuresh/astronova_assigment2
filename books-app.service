@@ -1,0 +1,17 @@
+[Unit]
+Description=Books App Backend Service
+After=network.target
+
+[Service]
+User=booksapp
+Group=booksapp
+WorkingDirectory=/opt/books-app/backend
+EnvironmentFile=/opt/books-app/backend.env
+ExecStart=/opt/books-app/backend/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8080
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
