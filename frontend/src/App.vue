@@ -30,7 +30,7 @@
             </svg>
           </div>
           <div>
-            <h1 class="header-title gradient-text">AstroNova</h1>
+            <h1 class="header-title gradient-text">AstraNova</h1>
             <p class="header-subtitle">Book Management System</p>
           </div>
         </div>
@@ -119,7 +119,7 @@
     <!-- Footer -->
     <footer class="footer">
       <div class="container">
-        <p>AstroNova &copy; {{ new Date().getFullYear() }} — Built with Vue.js &amp; FastAPI</p>
+        <p>AstraNova &copy; {{ new Date().getFullYear() }} — Built with Vue.js &amp; FastAPI</p>
       </div>
     </footer>
   </div>
