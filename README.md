@@ -377,6 +377,3 @@ curl http://<server-ip>/health
 
 ---
 
-## Security Note
-
-See [`SECURITY_INCIDENT.md`](./SECURITY_INCIDENT.md) for details on a private key that was previously committed to this repository, the remediation steps taken, and prevention measures for production pipelines.
