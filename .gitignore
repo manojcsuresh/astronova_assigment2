@@ -1,4 +1,4 @@
-# ─── Private Keys & Credentials ───────────────────────────────────
+# Private Keys & Credentials
 *.pem
 *.key
 *.p12
@@ -8,13 +8,14 @@ id_rsa
 id_ed25519
 *.pub
 
-# ─── Environment Files ───────────────────────────────────────────
+# Environment Files 
 .env
 .env.*
 .env.local
 .env.production
+backend.env
 
-# ─── Python ──────────────────────────────────────────────────────
+# Python 
 __pycache__/
 *.pyc
 *.pyo
@@ -24,25 +25,25 @@ venv/
 *.egg-info/
 dist/
 
-# ─── Node.js ─────────────────────────────────────────────────────
+# Node.js
 node_modules/
 npm-debug.log*
 yarn-error.log*
 
-# ─── Build Artifacts ─────────────────────────────────────────────
+# Build Artifacts 
 frontend/dist/
 frontend.tar.gz
 
-# ─── IDE / Editor ────────────────────────────────────────────────
+# IDE / Editor
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# ─── OS Files ────────────────────────────────────────────────────
+# OS Files 
 .DS_Store
 Thumbs.db
 
-# ─── Logs ────────────────────────────────────────────────────────
+# Logs 
 *.log
